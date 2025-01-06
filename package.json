@@ -1,0 +1,21 @@
+{
+  "name": "ecommerce-blog",
+  "version": "1.0.0",
+  "main": "database.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon ./app",
+    "test": "mocha ./tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "chai": "^5.1.2",
+    "chai-http": "^5.1.1",
+    "mocha": "^11.0.1",
+    "mysql2": "^3.11.5"
+  }
+}
