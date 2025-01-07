@@ -14,33 +14,33 @@ const pool = mysql2.createPool({
 // USER
 
 const createUserDB = async (email, username, password) => {
-    console.log("Creating User")
+    // console.log("Creating User")
     const [ data ] = await pool.query(`INSERT INTO User(email, username, password, isEmailVerified)
     Values ("${email}", "${username}", "${password}", False);`)
 
     console.log("Processing User's Credentials... \n")
 
-    console.log(data);
+    // console.log(data);
 
     return data;
 
 }
 
 const getAllUsersDB = async() => {
-    console.log("Getting Users..")
+    // console.log("Getting Users..")
 
     const [ data ] = await pool.query(`SELECT * FROM User;`);
 
-    console.log(data);
+    // console.log(data);
 
     return data;
 }
 
 const getUserDB = async(id) => {
-    console.log("Retrieving Single User...");
+    // console.log("Retrieving Single User...");
 
     const [ data ] = await pool.query(`SELECT * FROM User WHERE user_id=${id};`)
-    console.log(typeof id, id);
+    // console.log(typeof id, id);
     
     return data;
 }

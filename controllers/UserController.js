@@ -10,7 +10,7 @@ class UserController {
         this.blog_id = blog_id;
     }
 
-    async createUser()
+    async createUser(res)
     {
         // need to add authentication
         const user = await createUserDB(this.email, this.username, this.password)

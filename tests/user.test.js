@@ -17,20 +17,31 @@ describe("Users", () => {
                 .get('/users/get/all')
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.be.a('object')
+                    res.body.should.be.a('array');
                 });
             done();
         });
 
         it("Get a Single User", (done) => {
-            const id = 1;
             chai.request.execute(app)
-                .get(`/users/${id}`)
+                .get(`/users/1`)
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.be.a('object')
+                    expect(res.body).to.be.an('array');
+                    expect(res.body[0]).to.be.an('object');
                 });
             done();
         });
     });
+
+    describe("POST Request - Creating User", () => {
+        it("Create a New ShopaBlog User", () => {
+            chai.request.execute(app)
+                .post('/users/create')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    // expect()
+                })
+        })
+    })
 });

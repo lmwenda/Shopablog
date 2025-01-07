@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from 'body-parser';
 
 import UserRouter from "./urls/UserURL.js";
+import BlogRouter from "./urls/BlogURL.js";
 
 const port = 5000;
 const app = express();
@@ -17,7 +18,7 @@ app.get("/", (req, res) => {
 // Endpoints
 
 app.use('/users', UserRouter);
-app.use('/blogs', )
+app.use('/blogs', BlogRouter);
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);

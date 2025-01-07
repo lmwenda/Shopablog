@@ -7,9 +7,9 @@ CREATE TABLE User(
     email VARCHAR(50) unique,
     username VARCHAR(50),
     password VARCHAR(20),
-    isEmailVerified boolean,
+    isEmailVerified boolean
     
-    blog_id INT UNIQUE
+    -- blog_id INT UNIQUE  --
 );
 
 CREATE TABLE Blog(
