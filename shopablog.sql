@@ -6,7 +6,7 @@ CREATE TABLE User(
 	user_id INT PRIMARY KEY AUTO_INCREMENT unique,
     email VARCHAR(50) unique,
     username VARCHAR(50),
-    password VARCHAR(20),
+    password VARCHAR(100),
     isEmailVerified boolean
     
     -- blog_id INT UNIQUE  --

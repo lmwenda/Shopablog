@@ -1,3 +1,5 @@
+import Joi from "joi";
+import bcrypt from "bcrypt";
 import { createUserDB, getAllUsersDB, getUserDB } from "../utils/database.js";
 
 class UserController { 
@@ -7,13 +9,30 @@ class UserController {
         this.username = username; 
         this.password = password;
         this.isEmailVerified = isEmailVerified
-        this.blog_id = blog_id;
+        // this.blog_id = blog_id;
+    }
+
+    AuthenticateUser(body){
+        const schema = Joi.object({
+            email: Joi.string().min(8).required().email(),
+            username: Joi.string().min(3).required(),
+            password: Joi.string().min(6),
+        });
+        return schema.validate(body);
     }
 
     async createUser(res)
     {
+        // Authenticate the Body
+        const { error } = this.AuthenticateUser({ email: this.email, username: this.username, password: this.password });
+        if (error) return res.status(400).send(error.details[0].message); 
+
+        // Hashing Password 
+        const salt = await bcrypt.genSalt(10);
+        const hashedpassword = await bcrypt.hash(this.password, salt);
+
         // need to add authentication
-        const user = await createUserDB(this.email, this.username, this.password)
+        const user = await createUserDB(this.email, this.username, hashedpassword, res)
 
         res.send(user);
     }

@@ -13,16 +13,29 @@ const pool = mysql2.createPool({
 
 // USER
 
-const createUserDB = async (email, username, password) => {
+const createUserDB = async (email, username, password, res) => {
     // console.log("Creating User")
+
+    // checking if user exists
+
+    const [ user ]= await pool.query(`SELECT * FROM User WHERE email='${email}';`)
+    console.log(user[0])
+    if (typeof user[0] !== "undefined") 
+    {   
+        console.log("user already exists");
+        return "User Already Exists..."
+    }
+
+    // creating user
+
     const [ data ] = await pool.query(`INSERT INTO User(email, username, password, isEmailVerified)
     Values ("${email}", "${username}", "${password}", False);`)
 
     console.log("Processing User's Credentials... \n")
 
-    // console.log(data);
+    console.log(data);
 
-    return data;
+   return data;
 
 }
 
@@ -49,6 +62,7 @@ const getUserDB = async(id) => {
 
 const createBlog = async (email, username, password) => {
     console.log("Initiating new Blog")
+
     const [ data ] = await pool.query(`INSERT INTO Blog(email, username, password, isEmailVerified)
     Values ("${email}", "${username}", "${password}", False);`)
 
