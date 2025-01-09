@@ -1,5 +1,6 @@
 import { expect, use } from "chai";
 import chaiHttp from "chai-http";
+import * as jwt from "jsonwebtoken";
 
 import app from "../app.js";
 
@@ -34,8 +35,8 @@ describe("Users", () => {
         });
     });
 
-    describe("POST Request - Creating User", () => {
-        it("Create a New ShopaBlog User", () => {
+    describe("POST & PUT Request - Creating/Login/Delete User", () => {
+        it("Create a New ShopaBlog User, Login to the new account, check token and delete the account", (done) => {
             chai.request.execute(app)
                 .post('/users/create')
                 .send({
@@ -47,7 +48,26 @@ describe("Users", () => {
                     res.should.have.status(200);
 
                     // delete the account once its been created
-                    
+                  chai.request.execute(app)
+                    .post('/users/login')
+                    .send({
+                        email: "kt2trappy@gmail.com",
+                        password: "boohoo"
+                    })
+                    .end((err, res) => {
+                        console.log(res.body)
+                        res.body.should.have.property("token")
+                        const token = jwt.decode(res.body.token);
+                        const id = token._id;
+
+                        chai.request.execute(app)
+                            .delete(`/users/delete/${id}`)
+                            .end(function(error, res) {
+                                res.should.have.status(200);
+                                done();
+                            });
+                        
+                    })
                 })
         })
     });

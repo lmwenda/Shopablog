@@ -74,12 +74,12 @@ class UserController {
         const token = jwt.sign({ _id: this.user_id }, "F6]#5[4l;4e5r]tlgre'hgfdhgfd';k54o#tlrlkgfdh'k45'ky'46ky54yj'dfh;j546';tjhgdfs;gfsdjgjhsdf" , {
             expiresIn: "7 days",
         });
-        res.header('verification-token', token).send(token);
+        res.header('verification-token', token).send({ msg: "Welcome back " + this.email + "!", token: token });
     }
 
-    async getUser(id, res)
+    async getUser(res)
     {
-        const user = await getUserDB(id);
+        const user = await getUserDB(this.user_id);
         res.send(user);
     }
 
@@ -94,7 +94,7 @@ class UserController {
     {
         const user = await deleteUserDB(this.user_id);
 
-        res.send("Account Sucessfully Deleted: ", user[0].email);
+        res.status(200).send("Account Sucessfully Deleted");
     }
 
     async getAllUsers(res)

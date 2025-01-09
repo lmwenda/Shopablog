@@ -61,12 +61,12 @@ const getUserDB = async(id) => {
 }
 
 const deleteUserDB = async(id) => {
-    const [ data ] = await pool.query(`DELETE FROM User WHERE user_id=${id}`);
+    const [ data ] = await pool.query(`DELETE FROM User WHERE user_id=${id};`);
     return data;
 }
 
 const updateUserDB = async(id, username) => {
-    const [ data ] = await pool.query(`UPDATE User SET username=${username} WHERE use_id=${id}`);
+    const [ data ] = await pool.query(`UPDATE User SET username=${username} WHERE user_id=${id};`);
     return data;
 }
 

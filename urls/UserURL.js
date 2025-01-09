@@ -24,21 +24,21 @@ UserRouter.post(loginUserEndpoint,  async(req, res) => {
 }); 
 
 UserRouter.put(updateUserEndpoint, async(req, res) => {
-   user.user_id = req.body.id;
+   user.user_id = parseInt(req.params.id);
    user.username = req.body.username;
 
    user.updateUser(res);
 })
 
 UserRouter.delete(deleteUserEndpoint, async(req, res) => {
-   user.user_id = req.body.id;
+   user.user_id = parseInt(req.params.id);
 
    user.deleteUser(res)
 })
 
 UserRouter.get(getUserEndpoint, (req, res) => {
-   const id = parseInt(req.params.id); 
-   user.getUser(id, res)
+   user.user_id = parseInt(req.params.id); 
+   user.getUser(res)
 });
 
 UserRouter.get(getAllUsersEndpoint, (req, res) => {
