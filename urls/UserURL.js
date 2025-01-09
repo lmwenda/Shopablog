@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createUserEndpoint, getAllUsersEndpoint, getUserEndpoint, loginUserEndpoint } from "../utils/endpoints.js";
+import { createUserEndpoint, deleteUserEndpoint, getAllUsersEndpoint, getUserEndpoint, loginUserEndpoint, updateUserEndpoint } from "../utils/endpoints.js";
 import UserController from "../controllers/UserController.js";
 
 const UserRouter = Router();
@@ -22,6 +22,19 @@ UserRouter.post(loginUserEndpoint,  async(req, res) => {
 
    user.loginUser(res);
 }); 
+
+UserRouter.put(updateUserEndpoint, async(req, res) => {
+   user.user_id = req.body.id;
+   user.username = req.body.username;
+
+   user.updateUser(res);
+})
+
+UserRouter.delete(deleteUserEndpoint, async(req, res) => {
+   user.user_id = req.body.id;
+
+   user.deleteUser(res)
+})
 
 UserRouter.get(getUserEndpoint, (req, res) => {
    const id = parseInt(req.params.id); 

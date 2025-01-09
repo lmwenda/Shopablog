@@ -1,7 +1,7 @@
 import Joi from "joi";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { createUserDB, getAllUsersDB, getUserDB, pool } from "../utils/database.js";
+import { createUserDB, deleteUserDB, getAllUsersDB, getUserDB, pool, updateUserDB } from "../utils/database.js";
 
 class UserController { 
     constructor(user_id, email, username, password, isEmailVerified, blog_id){
@@ -81,6 +81,20 @@ class UserController {
     {
         const user = await getUserDB(id);
         res.send(user);
+    }
+
+    async updateUser(res)
+    {
+        const user = await updateUserDB(this.id, this.username);
+
+        res.send("Account Successfully Updated: ", user[0].email);
+    }
+
+    async deleteUser(res)
+    {
+        const user = await deleteUserDB(this.user_id);
+
+        res.send("Account Sucessfully Deleted: ", user[0].email);
     }
 
     async getAllUsers(res)

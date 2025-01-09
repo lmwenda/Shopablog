@@ -60,6 +60,16 @@ const getUserDB = async(id) => {
     return data;
 }
 
+const deleteUserDB = async(id) => {
+    const [ data ] = await pool.query(`DELETE FROM User WHERE user_id=${id}`);
+    return data;
+}
+
+const updateUserDB = async(id, username) => {
+    const [ data ] = await pool.query(`UPDATE User SET username=${username} WHERE use_id=${id}`);
+    return data;
+}
+
 // BLOG
 
 const createBlog = async (email, username, password) => {
@@ -82,4 +92,4 @@ const getAllBlogs = async() => {
     console.log(data)
 }
 
-export { createBlog, createUserDB, getUserDB, getAllUsersDB, getAllBlogs };
+export { createBlog, createUserDB, getUserDB, getAllUsersDB, getAllBlogs, deleteUserDB, updateUserDB };

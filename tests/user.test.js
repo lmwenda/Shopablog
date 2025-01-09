@@ -50,5 +50,11 @@ describe("Users", () => {
                     
                 })
         })
-    })
+    });
+
+    // login user
+
+    // delete user
+
+    // update user
 });
