@@ -1,6 +1,7 @@
 // User Endpoints
 
 export const createUserEndpoint = "/create";
+export const loginUserEndpoint = "/login";
 export const deleteUserEndpoint = "/delete/:id";
 export const updateUserEndpoint = "/update/:id";
 export const getUserEndpoint = "/:id";

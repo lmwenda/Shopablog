@@ -38,9 +38,16 @@ describe("Users", () => {
         it("Create a New ShopaBlog User", () => {
             chai.request.execute(app)
                 .post('/users/create')
+                .send({
+                    email: "kt2trappy@gmail.com",
+                    username: "chi chi man",
+                    password: "boohoo"
+                })
                 .end((err, res) => {
                     res.should.have.status(200);
-                    // expect()
+
+                    // delete the account once its been created
+                    
                 })
         })
     })

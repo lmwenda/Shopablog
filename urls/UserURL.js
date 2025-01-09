@@ -1,7 +1,5 @@
-import bcrypt from "bcrypt";
-import Joi from "joi";
 import { Router } from "express";
-import { createUserEndpoint, getAllUsersEndpoint, getUserEndpoint } from "../utils/endpoints.js";
+import { createUserEndpoint, getAllUsersEndpoint, getUserEndpoint, loginUserEndpoint } from "../utils/endpoints.js";
 import UserController from "../controllers/UserController.js";
 
 const UserRouter = Router();
@@ -17,6 +15,13 @@ UserRouter.post(createUserEndpoint, async(req, res) => {
    // Creaing User
    user.createUser(res);
 })
+
+UserRouter.post(loginUserEndpoint,  async(req, res) => {
+   user.email = req.body.email;
+   user.password = req.body.password;
+
+   user.loginUser(res);
+}); 
 
 UserRouter.get(getUserEndpoint, (req, res) => {
    const id = parseInt(req.params.id); 

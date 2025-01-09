@@ -1,5 +1,5 @@
 import { expect } from "chai"
-import { createUserEndpoint, deleteUserEndpoint, getAllUsersEndpoint,getUserEndpoint, updateUserEndpoint } from "../utils/endpoints.js"
+import { createUserEndpoint, deleteUserEndpoint, getAllUsersEndpoint,getUserEndpoint, loginUserEndpoint, updateUserEndpoint } from "../utils/endpoints.js"
 
 describe("API Endpoints", () => {
     describe("User Endpoints", () => {     
@@ -21,6 +21,10 @@ describe("API Endpoints", () => {
     
         it("Variable updateUserEndpoint is '/update/:id'", () =>{
             expect(updateUserEndpoint).to.equal("/update/:id");
+        })
+
+        it("Variable loginUserEndpoint is '/login'", () => {
+            expect(loginUserEndpoint).to.equal("/login");
         })
     });
 

@@ -4,7 +4,7 @@
   "main": "database.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon ./app",
+    "dev": "cross-env NODE_ENV=dev nodemon ./app",
     "test": "mocha ./tests"
   },
   "keywords": [],
@@ -19,6 +19,7 @@
     "chai-http": "^5.1.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",

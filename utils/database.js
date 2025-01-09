@@ -1,9 +1,11 @@
 import mysql2 from "mysql2";
 
+console.log(process.env.host)
+
 // Need to convert to environment variables
-const pool = mysql2.createPool({
+export const pool = mysql2.createPool({
     host: '127.0.0.1',
-    user: 'root',
+    user: 'root', 
     password: 'Bandobaby123',
     database: 'shopablog'
 }).promise();
