@@ -41,6 +41,8 @@ const createUserDB = async (email, username, password, res) => {
 
 }
 
+// update email verified
+
 const getAllUsersDB = async() => {
     // console.log("Getting Users..")
 

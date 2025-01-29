@@ -92,7 +92,7 @@ class UserController {
 
     async deleteUser(res)
     {
-        const user = await deleteUserDB(this.user_id);
+        await deleteUserDB(this.user_id);
 
         res.status(200).send("Account Sucessfully Deleted");
     }

@@ -1,95 +1,62 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import Image from "next/image"; 
+import Link from "next/link";
+import { motion } from 'motion/react'; 
+import image from "./image.jpg";
+
+export default function Page() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <motion.section animate={{ x: [ -75, 0 ], opacity: [ 0, 0.5, 0.7, 0.9, 1 ] }} transition={{ ease: 'easeIn', duration: 1.5 }}>
+      <div
+        className='container text-black rounded flex flex-col-reverse md:ml-24 items-center px-6 text-white mx-auto mt-1 space-y-12 md:space-y-0 md:mt-20 md:flex-row'
+      >
+          <div className='flex flex-col mb-32 space-y-12 md:w-1/2'>
+            <motion.h1
+                
+                className='max-w-md text-4xl text-black font-bold text-center md:text-5xl md:text-left'
+            >
+              Best Articulated Blogs
+            </motion.h1>
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            <div> 
+              <p className='max-w-sm text-center text-black md:text-left'>
+                  Write and read the best articulated articles and blogs currently trending online.
+                  Get paid to write and read cheap life-long information.
+              </p>
+            </div>    
+
+            <div className='flex justify-center md:justify-start'>
+                <motion.div
+                animate={{ y: [ 0, -20, 0 ], opacity: 1 }}
+                transition={{
+                  delay: 4,
+                  ease: 'easeInOut',
+                  y: { type: 'bounce', stiffness: 15, repeat: Infinity, duration: 1.5 },
+                  default: { duration: 1.5, repeat: Infinity },
+                }}
+                className='mt-5'>
+                  <Link href='/register'> 
+                    <button className='bg-red-500 font-bold rounded text-white px-6 p-3 hover:opacity-75'>Read now</button>
+                  </Link>
+                </motion.div>
+            </div>
+          </div>
+
+          <motion.div 
+            className='md:w-1/2'
+            animate={{ opacity: 1, y: [ 0, -50]}}
+            transition={
+              {
+                delay: 1,
+                y: { type: 'bounce', stiffness: 15 },
+                default: { duration: 3, repeatType: 'loop', repeat: Infinity },
+              }}
+            >
+              <Image className='sm:w-auto md:w-9/12 rounded-[30%]' height={0} width={0} src={image} alt='' />
+          </motion.div>
+      </div>
+
+    </motion.section>
   );
 }

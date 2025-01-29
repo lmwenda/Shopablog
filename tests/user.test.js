@@ -35,7 +35,7 @@ describe("Users", () => {
         });
     });
 
-    describe("POST & PUT Request - Creating/Login/Delete User", () => {
+    describe("POST & DELETE Request - Creating/Login/Delete User", () => {
         it("Create a New ShopaBlog User, Login to the new account, check token and delete the account", (done) => {
             chai.request.execute(app)
                 .post('/users/create')
@@ -72,9 +72,6 @@ describe("Users", () => {
         })
     });
 
-    // login user
-
-    // delete user
-
     // update user
+    
 });
