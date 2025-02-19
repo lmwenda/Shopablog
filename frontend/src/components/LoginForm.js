@@ -1,14 +1,47 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+import { BASE_URL } from "@/app/exportedDefinitions";
 
 export default function LoginForm() {
-    const message = "";
-    const emailHandler = () => {return true};
-    const passwordHandler = () => {return true};
 
-    const  loginUser = () => {
-        return true;
+    const router = useRouter();
+
+    const [ message, setMessage ] = useState("");
+    const [ email, setEmail ] = useState("");
+    const [ password, setPassword ] = useState("");
+
+    const emailHandler = (e) => setEmail(e.target.value);
+    const passwordHandler = (e) => setPassword(e.target.value);
+
+    const  loginUser = async(e) => {
+        e.preventDefault();
+        const body = {
+            email,
+            password
+        }
+
+        const response = await fetch(BASE_URL + "users/login", {
+            method: "POST",
+            headers: {
+                'Content-Type': "application/json"
+            },
+            body: JSON.stringify(body)
+        });
+
+        const data = await response.json();
+        setMessage(data.message)
+        console.log(data);
+
+        if(data.token)
+        {
+            localStorage.setItem("shopa-token", data.token);
+            console.log(data.token);
+            return router.push(`/home/${data.token}`)
+        }
     }
     return(
         <form className="flex flex-col space-y-5 mt-10 items-center">

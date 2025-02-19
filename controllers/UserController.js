@@ -34,7 +34,7 @@ class UserController {
     {
         // Authenticate the Body
         const { error } = this.AuthenticateUserRegister({ email: this.email, username: this.username, password: this.password });
-        if (error) return res.status(400).send(error.details[0].message); 
+        if (error) return res.status(400).send({type: "error", message: error.details[0].message}); 
 
         // Hashing Password 
         const salt = await bcrypt.genSalt(10);
@@ -50,7 +50,7 @@ class UserController {
     {
         const _user = { email: this.email, password: this.password };
         const { error } = this.AuthenticateUserLogin(_user);
-        if (error) return res.status(400).send(error.details[0].message); 
+        if (error) return res.status(400).send({type: "error", message: error.details[0].message }); 
 
         const [ data ]= await pool.query(`SELECT * FROM USER WHERE email='${this.email}'`);
         this.user_id = data[0].user_id;
@@ -66,7 +66,7 @@ class UserController {
         const validPassword = await bcrypt.compare(this.password, data[0].password);
         if(!validPassword) {
             console.log("Invalid Email or Password.");
-            return res.status(400).send("Invalid Email or Password.")
+            return res.status(400).send({ type: "error", message: "Invalid Email or Password." });
         };
     
          // Assigning new JWT Token and HTTP Header
@@ -74,7 +74,7 @@ class UserController {
         const token = jwt.sign({ _id: this.user_id }, "F6]#5[4l;4e5r]tlgre'hgfdhgfd';k54o#tlrlkgfdh'k45'ky'46ky54yj'dfh;j546';tjhgdfs;gfsdjgjhsdf" , {
             expiresIn: "7 days",
         });
-        res.header('verification-token', token).send({ msg: "Welcome back " + this.email + "!", token: token });
+        res.header('verification-token', token).send({ type: "success", message: "Welcome back " + this.email + "!", token: token });
     }
 
     async getUser(res)

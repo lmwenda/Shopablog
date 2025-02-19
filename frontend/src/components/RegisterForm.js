@@ -1,11 +1,14 @@
 "use client";
 
+import { BASE_URL } from "@/app/exportedDefinitions";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 
 export default function RegisterForm() {
 
+    const router = useRouter();
     const [message, setMessage ] = useState("");
     const [ email, setEmail ] = useState("");
     const [ username, setUsername ] = useState("");
@@ -15,8 +18,31 @@ export default function RegisterForm() {
     const usernameHandler = (e) => setUsername(e.target.value);
     const passwordHandler = (e) => setPassword(e.target.value);
 
-    const registerUser = () => {
-        return true;
+    const registerUser = async (e) => {
+        e.preventDefault();
+
+        const body = {
+            email,
+            username,
+            password
+        }
+        const response  = await fetch(BASE_URL + "users/create", {
+            method: "POST",
+            headers: {
+                'Content-Type': "application/json"
+            },
+            body: JSON.stringify(body)
+        });
+
+        const data = await response.json();
+        setMessage(data.message)
+
+        console.log(response);
+        console.log(data)
+
+        if (response.status == 200) return router.push("/login");
+ 
+
     }
     return(
         <form className="flex flex-col space-y-5 mt-10 items-center ">

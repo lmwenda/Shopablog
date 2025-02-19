@@ -1,14 +1,19 @@
 import Link from "next/link";
 
-export default function Header (){
-    return(
+export default function Header ({ isLoggedIn, token }){
+
+    const logout = () => {
+
+    }
+
+    return (
         
         <header className='flex border-b py-3 px-3 sm:px-10 bg-white font-[sans-serif] min-h-[65px] tracking-wide relative z-50 bg-white-500 '>
             <div className='flex flex-wrap items-center gap-4 max-w-screen-xl mx-auto w-full'>
-            <Link href="/" className="max-sm:hidden text-black  text-xl text-bold">
+            <Link href={isLoggedIn ? `/home/${token}` : "/"} className="max-sm:hidden text-black  text-xl text-bold">
                 Shopablog
             </Link>
-            <Link href="/" className="hidden max-sm:block text-black text-xl text-bold">
+            <Link href={isLoggedIn ? `/home/${token}` : "/"} className="hidden max-sm:block text-black text-xl text-bold">
                 Shopablog
             </Link>
     
@@ -53,7 +58,7 @@ export default function Header (){
                     </a>
                 </li>
                 <li className='max-lg:border-b max-lg:py-3 px-3'>
-                    <Link href='/'
+                    <Link  href={isLoggedIn ? `/home/${token}` : "/"}
                     className='lg:hover:text-[#007bff] text-[#007bff] block text-[15px]'>Home</Link>
                 </li>
                 <li className='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
@@ -65,9 +70,14 @@ export default function Header (){
                 <li className='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
                     className='lg:hover:text-[#007bff] text-gray-800 block text-[15px]'>Profile</a>
                 </li>
-                <li className='max-lg:border-b max-lg:py-3 px-3'><Link href='/register'
-                    className='lg:hover:text-[#007bff] text-gray-800 block text-[15px]'>Register</Link>
-                </li>
+                {
+                    isLoggedIn ? <li className='max-lg:border-b max-lg:py-3 px-3'><button onClick={logout}
+                        className='lg:hover:text-[#007bff] text-gray-800 block text-[15px]'>Logout</button>
+                    </li> :
+                    <li className='max-lg:border-b max-lg:py-3 px-3'><Link href='/register'
+                        className='lg:hover:text-[#007bff] text-gray-800 block text-[15px]'>Register</Link>
+                    </li>
+                }
                 </ul>
             </div>
     
