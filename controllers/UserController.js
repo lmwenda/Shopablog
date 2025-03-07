@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { createUserDB, deleteUserDB, getAllUsersDB, getUserDB, pool, updateUserDB } from "../utils/database.js";
 
 class UserController { 
-    constructor(user_id, email, username, password, isEmailVerified, blog_id){
+    constructor(user_id, email, username, password, isEmailVerified/*, blog_id */ ){
         this.user_id = user_id;
         this.email = email;
         this.username = username; 

@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Header ({ isLoggedIn, token }){
 
     const logout = () => {
-
+        localStorage.removeItem("shopa-token");
     }
 
     return (

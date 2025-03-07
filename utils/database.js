@@ -74,24 +74,28 @@ const updateUserDB = async(id, username) => {
 
 // BLOG
 
-const createBlog = async (email, username, password) => {
+const createBlogDB = async (title, subtitle, body, author_id) => {
     console.log("Initiating new Blog")
 
-    const [ data ] = await pool.query(`INSERT INTO Blog(email, username, password, isEmailVerified)
-    Values ("${email}", "${username}", "${password}", False);`)
+    const [ data ] = await pool.query(`INSERT INTO Blog(title, subtitle, body, author_id)
+    Values ("${title}", "${subtitle}", "${body}", "${author_id}");`)
 
     console.log("Processing Data... \n")
 
     console.log(data);
 
+    return data;
+
 }
 
-const getAllBlogs = async() => {
+const getAllBlogsDB = async() => {
     console.log("Getting Blogs...");
 
     const [ data ] = await pool.query("SELECT * FROM Blog;");
 
     console.log(data)
+
+    return data;
 }
 
-export { createBlog, createUserDB, getUserDB, getAllUsersDB, getAllBlogs, deleteUserDB, updateUserDB };
+export { createBlogDB, createUserDB, getUserDB, getAllUsersDB, getAllBlogsDB, deleteUserDB, updateUserDB };

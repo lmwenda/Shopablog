@@ -8,3 +8,6 @@ export const getUserEndpoint = "/:id";
 export const getAllUsersEndpoint = "/get/all";
 
 // Blog Endpoints
+
+export const createBlogEndpoint = "/create";
+export const getAllBlogsEndpoint = "/get/all";

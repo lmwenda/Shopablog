@@ -1,9 +1,15 @@
 "use client";
 
+import BrowseBlog from "../../../components/BrowseBlog"
+
 export default function Page(){
     return(
-        <div className="mt-24">
-            <h1 className="font-bold text-3xl text-red-500 text-center ">HOME</h1>
+        <div className="">
+            <div className="flex flex-col mx-auto h-screen border border-black flex-center items-center container">
+                <BrowseBlog />
+                <BrowseBlog />
+                <BrowseBlog />
+            </div>
         </div>
     )
 }
