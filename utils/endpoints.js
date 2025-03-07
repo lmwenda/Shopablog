@@ -10,4 +10,7 @@ export const getAllUsersEndpoint = "/get/all";
 // Blog Endpoints
 
 export const createBlogEndpoint = "/create";
+export const getBlogEndpoint = "/:id";
+export const updateBlogEndpoint = "/update/:id";
+export const deleteBlogEndpoint = "/delete/:id";
 export const getAllBlogsEndpoint = "/get/all";

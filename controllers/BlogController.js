@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { createBlogDB, getAllBlogsDB } from "../utils/database.js";
+import { createBlogDB, deleteBlogDB, getAllBlogsDB, getBlogDB, updateBlogDB } from "../utils/database.js";
 
 class BlogController {
     constructor(title, subtitle, body, author_id)
@@ -41,6 +41,24 @@ class BlogController {
         const data = await getAllBlogsDB();
 
         res.status(200).send({ type: "success", payload: data });
+    }
+
+    async getBlog(res, id)
+    {
+        const data = await getBlogDB(id);
+        res.send(data);
+    }
+
+    async updateBlog(res, id)
+    {
+        const data = await updateBlogDB(id, this.title, this.subtitle, this.body)
+        res.send(data);
+    }
+
+    async deleteBlog(res, id)
+    {
+        const data = await deleteBlogDB(id);
+        res.send(data);
     }
 }
 

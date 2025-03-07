@@ -98,4 +98,42 @@ const getAllBlogsDB = async() => {
     return data;
 }
 
-export { createBlogDB, createUserDB, getUserDB, getAllUsersDB, getAllBlogsDB, deleteUserDB, updateUserDB };
+const getBlogDB = async(id) => {
+    console.log(`Retrieving Blog (#${id}) `);
+
+    const [ data ] = await pool.query(`SELECT * FROM Blog WHERE blog_id=${id};`);
+    // console.log(data);
+
+    return data;
+}
+
+const updateBlogDB = async(id, title, subtitle, body) => {
+    console.log(`Updating Blog (#${id})`);
+    
+    const [ data ] = await pool.query(`UPDATE Blog SET title=${title} subtitle=${subtitle} body=${body} WHERE blog_id=${id};`)
+    // console.log(data);
+    
+    return data;
+}
+
+const deleteBlogDB = async(id) => {
+    console.log(`Deleting Blog (#${id})`);
+
+    const [ data ] = await pool.query(`DELETE FROM BLOG WHERE blog_id=${id};`)
+    // console.log(data);
+
+    return data;
+}
+
+export { 
+    createBlogDB, 
+    getBlogDB,
+    getAllBlogsDB,
+    updateBlogDB,
+    deleteBlogDB, 
+    createUserDB, 
+    getUserDB, 
+    getAllUsersDB, 
+    deleteUserDB, 
+    updateUserDB 
+};
