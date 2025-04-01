@@ -62,9 +62,6 @@ export default function Header ({ isLoggedIn, token }){
                     className='lg:hover:text-[#007bff] text-[#007bff] block text-[15px]'>Home</Link>
                 </li>
                 <li className='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
-                    className='lg:hover:text-[#007bff] text-gray-800 block text-[15px]'>Blogs</a>
-                </li>
-                <li className='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
                     className='lg:hover:text-[#007bff] text-gray-800 block text-[15px]'>Library</a>
                 </li>
                 <li className='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'

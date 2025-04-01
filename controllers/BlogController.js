@@ -20,6 +20,12 @@ class BlogController {
         return schema.validate(body);
     }
 
+    // NEED TO WRITE AUTHENTICATEUPDATEPOST PROCEDURE
+    AuthenticateUpdatePost(body)
+    {
+        return;
+    }
+
     async createBlog(res)
     {   
         const post = {

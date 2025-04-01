@@ -55,12 +55,12 @@ class UserController {
         const [ data ]= await pool.query(`SELECT * FROM USER WHERE email='${this.email}'`);
         this.user_id = data[0].user_id;
 
-        getUserDB(this.user_id);
         if(!this.user_id)
         {
             return res.status(404).send("User credentials doesn't exist");
         }    
-
+        
+        getUserDB(this.user_id);
          // CHECKING IF OUR PASSWORD IS VALID
 
         const validPassword = await bcrypt.compare(this.password, data[0].password);
