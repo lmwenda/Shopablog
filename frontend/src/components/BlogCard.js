@@ -1,4 +1,4 @@
-  const BlogCard = ({ image, date, CardTitle, CardDescription }) => {
+  const BlogCard = ({ image, date, CardTitle, CardSubTitle}) => {
     return (
       <>
         <div className="w-full border rounded px-4 md:w-1/2 lg:w-1/3">
@@ -21,7 +21,7 @@
                 </a>
               </h3>
               <p className="text-base text-body-color dark:text-dark-6">
-                {CardDescription}
+                {CardSubTitle}
               </p>
             </div>
           </div>

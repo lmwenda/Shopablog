@@ -1,5 +1,6 @@
 import { BASE_URL } from "@/app/exportedDefinitions";
 import BlogCard from "../../../components/BlogCard";
+import Link from "next/link";
 
 export default async function Page(){
     const response = await fetch(BASE_URL + "/blogs/get/all")
@@ -28,13 +29,15 @@ export default async function Page(){
                     <div className="-mx-4 flex flex-wrap ">
                         {
                             blogs.payload.map((blog) => (
-                                <BlogCard
-                                key={blog.blog_id}
-                                date="Dec 22, 2023"
-                                CardTitle={blog.title}
-                                CardDescription={blog.body}
-                                image={blog.image}
-                                />
+                                <Link href={`/blog/${blog.blog_id}`}>
+                                    <BlogCard
+                                    key={blog.blog_id}
+                                    date={blog.created_at}
+                                    CardTitle={blog.title}
+                                    CardSubTitle={blog.subtitle}
+                                    image={blog.image}
+                                    />
+                                </Link>
                             ))
                         }
                     </div>
