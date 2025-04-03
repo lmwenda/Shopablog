@@ -5,7 +5,8 @@ export default async function Page(){
     const response = await fetch(BASE_URL + "/blogs/get/all")
     const blogs = await response.json();
 
-    console.log(blogs);
+    // DEBUGGING
+    // console.log(blogs);
     return(
         <>
             <section className="bg-white pb-10 pt-4 dark:bg-dark lg:pb-20 lg:pt-[120px]">
@@ -32,7 +33,7 @@ export default async function Page(){
                                 date="Dec 22, 2023"
                                 CardTitle={blog.title}
                                 CardDescription={blog.body}
-                                image="https://i.ibb.co/Cnwd4q6/image-01.jpg"
+                                image={blog.image}
                                 />
                             ))
                         }

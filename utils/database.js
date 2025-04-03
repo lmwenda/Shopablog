@@ -74,11 +74,11 @@ const updateUserDB = async(id, username) => {
 
 // BLOG
 
-const createBlogDB = async (title, subtitle, body, author_id) => {
+const createBlogDB = async (title, subtitle, body, created_at, image, price, author_id) => {
     console.log("Initiating new Blog")
 
-    const [ data ] = await pool.query(`INSERT INTO Blog(title, subtitle, body, author_id)
-    Values ("${title}", "${subtitle}", "${body}", "${author_id}");`)
+    const [ data ] = await pool.query(`INSERT INTO Blog(title, subtitle, body, created_at, image, price, author_id)
+    Values ("${title}", "${subtitle}", "${body}", "${created_at}", "${image}",  "${price}","${author_id}");`);
 
     console.log("Processing Data... \n")
 

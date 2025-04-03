@@ -17,15 +17,26 @@ CREATE TABLE Blog(
     title VARCHAR(150),
     subtitle VARCHAR(250),
 	body TEXT,
+    created_at DATE NOT NULL,
+    image VARCHAR(500),
+    price FLOAT,
     author_id int,
     FOREIGN KEY(author_id) REFERENCES User(user_id)
 );
 
-CREATE TABLE UserInBlog(
+CREATE TABLE AuthorInBlogs(
 	author_id INT,
     FOREIGN KEY(author_id) REFERENCES User(user_id),
 
 	blog_id INT,
+    FOREIGN KEY(blog_id) REFERENCES Blog(blog_id)
+);
+
+CREATE TABLE UserInBlogs(
+    user_id INT,
+    FOREIGN KEY(user_id) REFERENCES USER(user_id),
+
+    blog_id INT,
     FOREIGN KEY(blog_id) REFERENCES Blog(blog_id)
 );
 
