@@ -1,13 +1,9 @@
-import { BASE_URL } from "@/app/exportedDefinitions";
-import BlogCard from "../../../components/BlogCard";
-import Link from "next/link";
+"use client";
 
-export default async function Page(){
-    const response = await fetch(BASE_URL + "/blogs/get/all")
-    const blogs = await response.json();
+import isAuth from "../isAuthenticated";
+import BlogList from "./BlogList";
 
-    // DEBUGGING
-    // console.log(blogs);
+async function Page(){
     return(
         <>
             <section className="bg-white pb-10 pt-4 dark:bg-dark lg:pb-20 lg:pt-[120px]">
@@ -27,22 +23,12 @@ export default async function Page(){
                     </div>
         
                     <div className="-mx-4 flex flex-wrap ">
-                        {
-                            blogs.payload.map((blog) => (
-                                <Link href={`/blog/${blog.blog_id}`}>
-                                    <BlogCard
-                                    key={blog.blog_id}
-                                    date={blog.created_at}
-                                    CardTitle={blog.title}
-                                    CardSubTitle={blog.subtitle}
-                                    image={blog.image}
-                                    />
-                                </Link>
-                            ))
-                        }
+                        <BlogList />
                     </div>
                 </div>
             </section>
         </>
     );
 }
+
+export default isAuth(Page);

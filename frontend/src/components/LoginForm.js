@@ -40,7 +40,7 @@ export default function LoginForm() {
         {
             localStorage.setItem("shopa-token", data.token);
             console.log(data.token);
-            return router.push(`/home/${data.token}`)
+            return router.push(`/home`)
         }
     }
     return(

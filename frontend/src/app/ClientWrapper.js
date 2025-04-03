@@ -15,7 +15,7 @@ export default function ClientWrapper({ children })
         console.log(token);
 
         if (token) {
-            router.push(`/home/${token}`) 
+            router.push(`/home`) 
             return setIsLoggedIn(true);
         }
 
