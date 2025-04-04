@@ -1,9 +1,13 @@
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Header ({ isLoggedIn, token }){
 
+    const router = useRouter();
+
     const logout = () => {
         localStorage.removeItem("shopa-token");
+        router.refresh();
     }
 
     return (
@@ -13,7 +17,7 @@ export default function Header ({ isLoggedIn, token }){
             <Link href={isLoggedIn ? `/home/${token}` : "/"} className="max-sm:hidden text-black  text-xl text-bold">
                 Shopablog
             </Link>
-            <Link href={isLoggedIn ? `/home/${token}` : "/"} className="hidden max-sm:block text-black text-xl text-bold">
+            <Link href={isLoggedIn ? `/home` : "/"} className="hidden max-sm:block text-black text-xl text-bold">
                 Shopablog
             </Link>
     

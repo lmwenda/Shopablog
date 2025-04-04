@@ -26,7 +26,7 @@ export default function RegisterForm() {
             username,
             password
         }
-        const response  = await fetch(BASE_URL + "users/create", {
+        const response  = await fetch(BASE_URL + "/users/create", {
             method: "POST",
             headers: {
                 'Content-Type': "application/json"

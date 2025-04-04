@@ -24,7 +24,7 @@ export default function LoginForm() {
             password
         }
 
-        const response = await fetch(BASE_URL + "users/login", {
+        const response = await fetch(BASE_URL + "/users/login", {
             method: "POST",
             headers: {
                 'Content-Type': "application/json"
@@ -40,7 +40,8 @@ export default function LoginForm() {
         {
             localStorage.setItem("shopa-token", data.token);
             console.log(data.token);
-            return router.push(`/home`)
+            router.push(`/home`)
+            return router.refresh();
         }
     }
     return(

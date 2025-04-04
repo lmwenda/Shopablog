@@ -1,9 +1,15 @@
-"use client";
-
+import { redirect } from "next/navigation";
 import isAuth from "../isAuthenticated";
 import BlogList from "./BlogList";
 
-async function Page(){
+function Page(){
+    const auth = isAuth;
+
+    if(!auth)
+    {
+        redirect("/");
+    }
+
     return(
         <>
             <section className="bg-white pb-10 pt-4 dark:bg-dark lg:pb-20 lg:pt-[120px]">
@@ -31,4 +37,4 @@ async function Page(){
     );
 }
 
-export default isAuth(Page);
+export default Page;
