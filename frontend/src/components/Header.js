@@ -65,11 +65,11 @@ export default function Header ({ isLoggedIn, token }){
                     <Link  href={isLoggedIn ? `/home/${token}` : "/"}
                     className='lg:hover:text-[#007bff] text-[#007bff] block text-[15px]'>Home</Link>
                 </li>
-                <li className='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
-                    className='lg:hover:text-[#007bff] text-gray-800 block text-[15px]'>Library</a>
+                <li className='max-lg:border-b max-lg:py-3 px-3'><Link href='/library'
+                    className='lg:hover:text-[#007bff] text-gray-800 block text-[15px]'>Library</Link>
                 </li>
-                <li className='max-lg:border-b max-lg:py-3 px-3'><a href='javascript:void(0)'
-                    className='lg:hover:text-[#007bff] text-gray-800 block text-[15px]'>Profile</a>
+                <li className='max-lg:border-b max-lg:py-3 px-3'><Link href='/profile'
+                    className='lg:hover:text-[#007bff] text-gray-800 block text-[15px]'>Profile</Link>
                 </li>
                 {
                     isLoggedIn ? <li className='max-lg:border-b max-lg:py-3 px-3'><button onClick={logout}
