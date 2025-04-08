@@ -4,10 +4,10 @@ console.log(process.env.host)
 
 // Need to convert to environment variables
 export const pool = mysql2.createPool({
-    host: '127.0.0.1',
-    user: 'root', 
-    password: 'Bandobaby123',
-    database: 'shopablog'
+    host: process.env.host,
+    user: process.env.user, 
+    password: process.env.password, // just change password when git pull to your local db password
+    database: process.env.database
 }).promise();
 
 // const [ data ] = await pool.query("SELECT Blog.author_id, User.user_id, User.email, User.username, Blog.title FROM Blog INNER JOIN User ON Blog.author_id = User.user_id;");
@@ -69,6 +69,13 @@ const deleteUserDB = async(id) => {
 
 const updateUserDB = async(id, username) => {
     const [ data ] = await pool.query(`UPDATE User SET username=${username} WHERE user_id=${id};`);
+    return data;
+}
+
+const verifyUserDB = async (email) => {
+    const [ data ] = await pool.query(`UPDATE User SET isEmailVerified=1 WHERE email='${email}';`);
+
+    console.log(`Email Verified: ${email}`);
     return data;
 }
 
@@ -135,5 +142,6 @@ export {
     getUserDB, 
     getAllUsersDB, 
     deleteUserDB, 
-    updateUserDB 
+    updateUserDB,
+    verifyUserDB 
 };

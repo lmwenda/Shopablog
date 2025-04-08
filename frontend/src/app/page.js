@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <motion.section animate={{ x: [ -75, 0 ], opacity: [ 0, 0.5, 0.7, 0.9, 1 ] }} transition={{ ease: 'easeIn', duration: 1.5 }}>
       <div
-        className='container text-black rounded flex flex-col-reverse md:ml-24 items-center px-6 text-white mx-auto mt-1 space-y-12 md:space-y-0 md:mt-20 md:flex-row'
+        className='container text-black rounded flex flex-col-reverse md:ml-24 lg:ml-32 items-center px-6 text-white mx-auto mt-1 space-y-12 md:space-y-0 md:mt-20 md:flex-row'
       >
           <div className='flex flex-col mb-32 space-y-12 md:w-1/2'>
             <motion.h1

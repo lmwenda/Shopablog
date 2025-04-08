@@ -1,7 +1,8 @@
 import Joi from "joi";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { createUserDB, deleteUserDB, getAllUsersDB, getUserDB, pool, updateUserDB } from "../utils/database.js";
+import { createUserDB, deleteUserDB, getAllUsersDB, getUserDB, pool, updateUserDB, verifyUserDB } from "../utils/database.js";
+import mail from "../utils/mail.js";
 
 class UserController { 
     constructor(user_id, email, username, password, isEmailVerified/*, blog_id */ ){
@@ -52,7 +53,7 @@ class UserController {
         const { error } = this.AuthenticateUserLogin(_user);
         if (error) return res.status(400).send({type: "error", message: error.details[0].message }); 
 
-        const [ data ]= await pool.query(`SELECT * FROM USER WHERE email='${this.email}'`);
+        const [ data ]= await pool.query(`SELECT * FROM User WHERE email='${this.email}'`);
         this.user_id = data[0].user_id;
 
         if(!this.user_id)
@@ -75,6 +76,24 @@ class UserController {
             expiresIn: "7 days",
         });
         res.header('verification-token', token).send({ type: "success", message: "Welcome back " + this.email + "!", token: token });
+    }
+
+
+    async verifyUser(res)
+    {
+        const info = await mail.sendMail({
+            from: '"Shopablog" <lukemwen619456@gmail.com>', // sender address
+            to: this.email, // list of receivers
+            subject: "Email Verification", // Subject line
+            text: `Hello, ${this.email}`, // plain text body
+            html: `
+                <h1>Hello, ${this.email}</h1>
+                <p>To Verify your account please click the button below...</p>
+                <button>Verify</button>
+            `, // html body
+          });
+        
+          console.log("Message sent: %s", info.messageId);
     }
 
     async getUser(res)

@@ -7,11 +7,11 @@ import UserRouter from "./urls/UserURL.js";
 import BlogRouter from "./urls/BlogURL.js";
 
 
-dotenv.config();
 
-const port = 5000;
+const port = process.env.PORT; 
 const app = express();
 
+dotenv.config();
 // Configure app to user bodyParser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -30,7 +30,7 @@ app.use('/users', UserRouter);
 app.use('/blogs', BlogRouter);
 
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
+    console.log(`Server running at ${process.env.BASE_URL}`);
 });
 
 export default app;
