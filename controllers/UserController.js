@@ -108,7 +108,7 @@ class UserController {
                 <h1>Hello, ${this.email}</h1>
                 <p>To Verify your account please click the button below...</p>
                 <button>
-                    <a href="${process.env.FRONTEND_URL}verify?token=${token}">
+                    <a href="${process.env.BASE_URL}verify/${token}">
                         Verify
                     </a>
                 </button>
