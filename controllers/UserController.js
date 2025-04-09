@@ -5,7 +5,8 @@ import { createUserDB, deleteUserDB, getAllUsersDB, getUserDB, pool, updateUserD
 import mail from "../utils/mail.js";
 
 class UserController { 
-    constructor(user_id, email, username, password, isEmailVerified/*, blog_id */ ){
+    constructor(user_id, email, username, password, isEmailVerified, token/*, blog_id */ ){
+        this.token = token;
         this.user_id = user_id;
         this.email = email;
         this.username = username; 
@@ -72,23 +73,34 @@ class UserController {
     
          // Assigning new JWT Token and HTTP Header
 
-        const token = jwt.sign({ _id: this.user_id }, "F6]#5[4l;4e5r]tlgre'hgfdhgfd';k54o#tlrlkgfdh'k45'ky'46ky54yj'dfh;j546';tjhgdfs;gfsdjgjhsdf" , {
+        const token = jwt.sign({ _id: this.user_id }, process.env.JWT_TOKEN , {
             expiresIn: "7 days",
         });
         res.header('verification-token', token).send({ type: "success", message: "Welcome back " + this.email + "!", token: token });
     }
 
-    async emailUser(res, token)
+    async emailUser(res)
     {
 
         // breaking down the token
 
+        const decoded = jwt.verify(this.token, process.env.JWT_TOKEN);
+        // console.log(decoded); OUTPUT { _id: number, iat: number, exp: number }
+        this.user_id = decoded._id;
 
+        const user = await getUserDB(this.user_id);
+        this.email = user[0].email;
+        
+        // sign new token
+
+        const token = jwt.sign({ email: this.email }, process.env.JWT_TOKEN , {
+            expiresIn: "10 minutes",
+        });
 
         // send the email
 
         const info = await mail.sendMail({
-            from: '"Shopablog" <lukemwen619456@gmail.com>', // sender address
+            from: `"Shopablog" <${process.env.mail_email}>`, // sender address
             to: this.email, // list of receivers
             subject: "Email Verification", // Subject line
             text: `Hello, ${this.email}`, // plain text body
@@ -96,7 +108,7 @@ class UserController {
                 <h1>Hello, ${this.email}</h1>
                 <p>To Verify your account please click the button below...</p>
                 <button>
-                    <a href="${process.env.FRONTEND_URL}verify?token=${token}&id=${this.user_id}">
+                    <a href="${process.env.FRONTEND_URL}verify?token=${token}">
                         Verify
                     </a>
                 </button>
@@ -104,6 +116,7 @@ class UserController {
           });
         
           console.log("Message sent: %s", info.messageId);
+          res.send("Email Sent");
     }
 
     async getUser(res)
