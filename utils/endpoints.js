@@ -6,7 +6,7 @@ export const deleteUserEndpoint = "/delete/:id";
 export const updateUserEndpoint = "/update/:id";
 export const getUserEndpoint = "/:id";
 export const getAllUsersEndpoint = "/get/all";
-export const verifyUserEndpoint = "/verify";
+export const sendEmailUserEndpoint= "/send-email";
 
 // Blog Endpoints
 

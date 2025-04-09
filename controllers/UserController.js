@@ -78,9 +78,15 @@ class UserController {
         res.header('verification-token', token).send({ type: "success", message: "Welcome back " + this.email + "!", token: token });
     }
 
-
-    async verifyUser(res)
+    async emailUser(res, token)
     {
+
+        // breaking down the token
+
+
+
+        // send the email
+
         const info = await mail.sendMail({
             from: '"Shopablog" <lukemwen619456@gmail.com>', // sender address
             to: this.email, // list of receivers
@@ -89,7 +95,11 @@ class UserController {
             html: `
                 <h1>Hello, ${this.email}</h1>
                 <p>To Verify your account please click the button below...</p>
-                <button>Verify</button>
+                <button>
+                    <a href="${process.env.FRONTEND_URL}verify?token=${token}&id=${this.user_id}">
+                        Verify
+                    </a>
+                </button>
             `, // html body
           });
         
