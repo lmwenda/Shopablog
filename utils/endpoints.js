@@ -7,7 +7,6 @@ export const updateUserEndpoint = "/update/:id";
 export const getUserEndpoint = "/:id";
 export const getAllUsersEndpoint = "/get/all";
 export const sendEmailUserEndpoint= "/send-email";
-export const verifyUserEndpoint = "/verify";
 
 // Blog Endpoints
 

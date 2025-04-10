@@ -17,13 +17,11 @@ export default function ClientWrapper({ children })
         console.log(token);
 
         if (token) {
-            router.push(`/home`) 
             auth = true;
             return setIsLoggedIn(true);
         }
 
         auth = false;
-        router.push("/");
         return setIsLoggedIn(false);
     });
 

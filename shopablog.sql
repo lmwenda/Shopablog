@@ -6,13 +6,13 @@ use shopablog;
 -- User Schema
 CREATE TABLE User(
 	user_id INT PRIMARY KEY AUTO_INCREMENT unique,
-    email VARCHAR(50) unique,
+    email VARCHAR(50) unique NOT NULL,
     username VARCHAR(50),
-    password VARCHAR(100),
+    password VARCHAR(100) NOT NULL,
     isEmailVerified boolean,
+    profile_picture TINYTEXT,
+    biography LONGTEXT,
     isCreator boolean
-    
-    -- blog_id INT UNIQUE  --
 );
 
 -- Blog Schema 

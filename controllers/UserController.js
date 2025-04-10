@@ -1,7 +1,7 @@
 import Joi from "joi";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { createUserDB, deleteUserDB, getAllUsersDB, getUserDB, pool, updateUserDB, verifyUserDB } from "../utils/database.js";
+import { createUserDB, deleteUserDB, getAllUsersDB, getUserDB, pool, updateUserDB } from "../utils/database.js";
 import mail from "../utils/mail.js";
 
 class UserController { 
@@ -121,6 +121,9 @@ class UserController {
 
     async getUser(res)
     {
+        const decoded = jwt.verify(this.token, process.env.JWT_TOKEN);
+        this.user_id = decoded._id;
+
         const user = await getUserDB(this.user_id);
         res.send(user);
     }

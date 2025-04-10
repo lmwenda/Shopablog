@@ -4,8 +4,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from 'motion/react'; 
 import image from "./image.jpg";
+import isAuth from "./isAuthenticated";
+import { redirect } from "next/navigation";
 
 export default function Page() {
+  
+  const auth = isAuth;
+
+    if(auth)
+    {
+        redirect("/home");
+    }
+
   return (
     <motion.section animate={{ x: [ -75, 0 ], opacity: [ 0, 0.5, 0.7, 0.9, 1 ] }} transition={{ ease: 'easeIn', duration: 1.5 }}>
       <div

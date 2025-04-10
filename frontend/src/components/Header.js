@@ -14,7 +14,7 @@ export default function Header ({ isLoggedIn, token }){
         
         <header className='flex border-b py-3 px-3 sm:px-10 bg-white font-[sans-serif] min-h-[65px] tracking-wide relative z-50 bg-white-500 '>
             <div className='flex flex-wrap items-center gap-4 max-w-screen-xl mx-auto w-full'>
-            <Link href={isLoggedIn ? `/home/${token}` : "/"} className="max-sm:hidden text-black  text-xl text-bold">
+            <Link href={isLoggedIn ? `/home` : "/"} className="max-sm:hidden text-black  text-xl text-bold">
                 Shopablog
             </Link>
             <Link href={isLoggedIn ? `/home` : "/"} className="hidden max-sm:block text-black text-xl text-bold">
@@ -62,7 +62,7 @@ export default function Header ({ isLoggedIn, token }){
                     </a>
                 </li>
                 <li className='max-lg:border-b max-lg:py-3 px-3'>
-                    <Link  href={isLoggedIn ? `/home/${token}` : "/"}
+                    <Link  href={isLoggedIn ? `/home` : "/"}
                     className='lg:hover:text-[#007bff] text-[#007bff] block text-[15px]'>Home</Link>
                 </li>
                 <li className='max-lg:border-b max-lg:py-3 px-3'><Link href='/library'

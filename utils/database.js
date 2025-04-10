@@ -56,7 +56,7 @@ const getAllUsersDB = async() => {
 const getUserDB = async(id) => {
     // console.log("Retrieving Single User...");
 
-    const [ data ] = await pool.query(`SELECT * FROM User WHERE user_id=${id};`)
+    const [ data ] = await pool.query(`SELECT email, isCreator, isEmailVerified, user_id, username FROM User WHERE user_id=${id};`)
     // console.log(typeof id, id);
     
     return data;
