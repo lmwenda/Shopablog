@@ -30,8 +30,8 @@ const createUserDB = async (email, username, password, res) => {
 
     // creating user
 
-    const [ data ] = await pool.query(`INSERT INTO User(email, username, password, isEmailVerified)
-    Values ("${email}", "${username}", "${password}", False);`)
+    const [ data ] = await pool.query(`INSERT INTO User(email, username, password, isEmailVerified, isCreator)
+    Values ("${email}", "${username}", "${password}", False, False);`)
 
     console.log("Processing User's Credentials... \n")
 
@@ -74,7 +74,7 @@ const updateUserDB = async(id, username) => {
 
 const verifyUserDB = async (email) => {
     const [ data ] = await pool.query(`UPDATE User SET isEmailVerified=1 WHERE email='${email}';`);
-
+ 
     console.log(`Email Verified: ${email}`);
     return data;
 }

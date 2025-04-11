@@ -2,12 +2,10 @@
 
 import Header from "@/components/Header";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { isAuthenticated } from "./exportedDefinitions";
 
 export default function ClientWrapper({ children })
 {
-    const router = useRouter();
     let auth = isAuthenticated;
     const [isLoggedin, setIsLoggedIn ] = useState(false);
     const [token, setToken ] = useState('');

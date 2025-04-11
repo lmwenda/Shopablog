@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createUserEndpoint, deleteUserEndpoint, getAllUsersEndpoint, getUserEndpoint, loginUserEndpoint, sendEmailUserEndpoint, updateUserEndpoint } from "../utils/endpoints.js";
+import { createUserEndpoint, deleteUserEndpoint, getAllUsersEndpoint, getUserEndpoint, loginAdminUserEndpoint, loginUserEndpoint, sendEmailUserEndpoint, updateUserEndpoint } from "../utils/endpoints.js";
 import UserController from "../controllers/UserController.js";
 
 const UserRouter = Router();
@@ -21,6 +21,13 @@ UserRouter.post(sendEmailUserEndpoint, async(req, res) => {
 
    user.emailUser(res);
 });
+
+UserRouter.post(loginAdminUserEndpoint, async(req, res) => {
+   user.email = req.body.email;
+   user.password = req.body.password;
+
+   user.loginAdminUser(res);
+})
 
 UserRouter.post(loginUserEndpoint,  async(req, res) => {
    user.email = req.body.email;

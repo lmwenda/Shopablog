@@ -119,6 +119,43 @@ class UserController {
           res.send("Email Sent");
     }
 
+    async loginAdminUser(res)
+    {
+        const _user = { email: this.email, password: this.password };
+        const { error } = this.AuthenticateUserLogin(_user);
+        if (error) return res.status(400).send({type: "error", message: error.details[0].message }); 
+
+        const [ data ]= await pool.query(`SELECT * FROM User WHERE email='${this.email}'`);
+        this.user_id = data[0].user_id;
+
+        if(!this.user_id)
+        {
+            return res.status(404).send("User credentials doesn't exist");
+        }    
+        
+        const user = await getUserDB(this.user_id);
+         // CHECKING IF OUR PASSWORD IS VALID
+
+        const validPassword = await bcrypt.compare(this.password, data[0].password);
+        if(!validPassword) {
+            console.log("Invalid Email or Password.");
+            return res.status(400).send({ type: "error", message: "Invalid Email or Password." });
+        };
+
+        if (user[0].isCreator == 1)
+        {
+            // Assigning new JWT Token and HTTP Header
+    
+           const token = jwt.sign({ _id: this.user_id }, process.env.ADMIN_TOKEN , {
+               expiresIn: "7 days",
+           });
+           res.header('verification-admin-token', token).send({ type: "success", message: "Welcome back " + this.email + "!", token: token });
+        }else{
+            res.status(400).send({ type: "error", message: "You are not admin." });
+        }
+    
+    }
+
     async getUser(res)
     {
         const decoded = jwt.verify(this.token, process.env.JWT_TOKEN);
