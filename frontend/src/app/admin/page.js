@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { redirect } from "next/navigation";
+import CreateBlog from "./CreateBlog";
 
 function Page()
 {
@@ -13,7 +14,8 @@ function Page()
     })
     return(
         <div>
-
+            <h1>Admin Page</h1>
+            <CreateBlog />
         </div>
     );
 }
