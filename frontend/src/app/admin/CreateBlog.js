@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { BASE_URL } from "../exportedDefinitions";
+import uploadFile from "@/utils/uploadFile";
 
 function CreateBlog()
 {
@@ -14,6 +15,7 @@ function CreateBlog()
     
       const [image, setImage] = useState(null);
       const [message, setMessage] = useState('');
+      const token = localStorage.getItem("admin-token");
     
       const handleChange = (e) => {
         const { name, value } = e.target;
@@ -28,24 +30,40 @@ function CreateBlog()
     
       const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        const data = new FormData();
-        data.append('title', formData.title);
-        data.append('subtitle', formData.subtitle);
-        data.append('body', formData.body);
-        data.append('price', formData.price);
 
-        // wont include image into db
-        // if (image) {
-        //   data.append('image', image);
-        // }
-    
-        // Example POST request — replace with your API logic
+        
+        const data = {
+          title: formData.title,
+          subtitle: formData.subtitle,
+          body: formData.body,
+          price: formData.price,
+          token: token,
+          image: null,
+        }
+
+        if (image) {
+          data["image"] = image;
+          uploadFile("./image.jpg", image, "shopablog");
+        }
+
         try {
+          console.log("sends", data.title);
+          console.log(token);
+
+          console.log("s3 bucket:");
+          
+
           const res = await fetch(BASE_URL+"/blogs/create", {
-            method: 'POST',
+            method: 'POST', 
+            headers: {
+                'Content-Type': "application/json"
+            },
             body: JSON.stringify(data),
           });
+
+
+          const _data = await res.json();
+          console.log(_data);
     
           if (res.ok) {
             setMessage('Post created successfully!');

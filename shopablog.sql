@@ -22,7 +22,7 @@ CREATE TABLE Blog(
     subtitle VARCHAR(250),
 	body TEXT,
     created_at DATE NOT NULL,
-    image VARCHAR(500),
+    image BLOB,
     price FLOAT,
     author_id int,
     FOREIGN KEY(author_id) REFERENCES User(user_id)

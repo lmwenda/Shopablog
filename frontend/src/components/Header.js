@@ -1,12 +1,15 @@
+import { useUser } from "@/context/UserContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function Header ({ isLoggedIn, token }){
+export default function Header ({ isLoggedIn }){
 
     const router = useRouter();
+    const { logout } = useUser();
 
-    const logout = () => {
+    const _logout = () => {
         localStorage.removeItem("shopa-token");
+        logout();
         router.refresh();
     }
 
@@ -72,7 +75,7 @@ export default function Header ({ isLoggedIn, token }){
                     className='lg:hover:text-[#007bff] text-gray-800 block text-[15px]'>Profile</Link>
                 </li>
                 {
-                    isLoggedIn ? <li className='max-lg:border-b max-lg:py-3 px-3'><button onClick={logout}
+                    isLoggedIn ? <li className='max-lg:border-b max-lg:py-3 px-3'><button onClick={_logout}
                         className='lg:hover:text-[#007bff] text-gray-800 block text-[15px]'>Logout</button>
                     </li> :
                     <li className='max-lg:border-b max-lg:py-3 px-3'><Link href='/register'

@@ -1,19 +1,11 @@
-import { redirect } from "next/navigation";
-import isAuth from "../isAuthenticated";
+"use server";
 import BlogList from "./BlogList";
 
 function Page(){
-    const auth = isAuth;
-
-    if(!auth)
-    {
-        redirect("/");
-    }
-
     return(
-        <>
+        <main className="max-w-5xl mx-auto px-4 py-10">
             <BlogList />
-        </>
+        </main>
     );
 }
 

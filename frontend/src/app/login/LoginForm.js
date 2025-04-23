@@ -3,8 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
-import { BASE_URL } from "@/app/exportedDefinitions";
+import LoginData from "./LoginData";
 
 export default function LoginForm() {
 
@@ -19,20 +18,14 @@ export default function LoginForm() {
 
     const  loginUser = async(e) => {
         e.preventDefault();
+
         const body = {
             email,
             password
         }
 
-        const response = await fetch(BASE_URL + "/users/login", {
-            method: "POST",
-            headers: {
-                'Content-Type': "application/json"
-            },
-            body: JSON.stringify(body)
-        });
+        const data = await LoginData(body);
 
-        const data = await response.json();
         setMessage(data.message)
         console.log(data);
 

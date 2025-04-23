@@ -1,28 +1,31 @@
 import { BASE_URL } from "@/app/exportedDefinitions";
-import BlogCard from "../../components/BlogCard";
+import BlogCard from "./BlogCard";
 import Link from "next/link";
 
-const BlogList = async () => {
-    const response = await fetch(BASE_URL + "/blogs/get/all")
-    const blogs = await response.json();
+export const GetBlogs = async() => {
+    const response = await fetch(BASE_URL+ "/blogs/get/all");
+    const data = await response.json();
 
+    return data.payload;
+}
+
+export default async function BlogList () {
+    const blogs = await GetBlogs();
     return(
-        <>
+        <div className="grid gap-8 md:grid-cols-2">
             {
-                blogs.payload.map((blog) => (
+                blogs.map((blog) => (
                     <Link href={`/blog/${blog.blog_id}`}>
                         <BlogCard
                         key={blog.blog_id}
                         date={blog.created_at}
-                        CardTitle={blog.title}
-                        CardSubTitle={blog.subtitle}
+                        title={blog.title}
+                        subtitle={blog.subtitle}
                         image={blog.image}
                         />
                     </Link>
                 ))
             }
-        </>
+        </div>
     );
 }
-
-export default BlogList;

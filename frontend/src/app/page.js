@@ -4,14 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from 'motion/react'; 
 import image from "./image.jpg";
-import isAuth from "./isAuthenticated";
 import { redirect } from "next/navigation";
+import { useUser } from "@/context/UserContext";
 
 export default function Page() {
   
-  const auth = isAuth;
-
-    if(auth)
+  const { user } = useUser();
+    if(user)
     {
         redirect("/home");
     }

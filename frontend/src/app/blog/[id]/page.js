@@ -8,7 +8,7 @@ export default function Page() {
     console.log(params);
     return(
         <div>
-            <h1>Blog ID: {id}</h1>
+            <h1>Blog ID: {params.id}</h1>
         </div>
     );
 }

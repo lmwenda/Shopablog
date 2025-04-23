@@ -136,8 +136,8 @@ class UserController {
         const user = await getUserDB(this.user_id);
          // CHECKING IF OUR PASSWORD IS VALID
 
-        const validPassword = await bcrypt.compare(this.password, data[0].password);
-        if(!validPassword) {
+        // const validPassword = await bcrypt.compare(this.password, data[0].password);
+        if(/*!validPassword*/ data[0].password != this.password) {
             console.log("Invalid Email or Password.");
             return res.status(400).send({ type: "error", message: "Invalid Email or Password." });
         };
