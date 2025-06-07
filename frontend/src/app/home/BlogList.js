@@ -1,16 +1,22 @@
-import { BASE_URL } from "@/app/exportedDefinitions";
+"use client";
+
+import { BASE_URL } from "../exportedDefinitions";
 import BlogCard from "./BlogCard";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
-export const GetBlogs = async() => {
-    const response = await fetch(BASE_URL+ "/blogs/get/all");
-    const data = await response.json();
 
-    return data.payload;
-}
+export default function BlogList () {
+    const [blogs, setBlogs] = useState([]);
 
-export default async function BlogList () {
-    const blogs = await GetBlogs();
+    useEffect(() => {
+        fetch(BASE_URL+ "/blogs/get/all")
+            .then((res) => res.json())
+            .then((data) => {
+                setBlogs(data.payload);
+            });
+    }, [setBlogs, blogs])
+
     return(
         <div className="grid gap-8 md:grid-cols-2">
             {
