@@ -12,7 +12,7 @@ function CreateBlog()
         body: '',
         price: '',
       });
-    
+
       const [image, setImage] = useState(null);
       const [message, setMessage] = useState('');
       const token = localStorage.getItem("admin-token");

@@ -1,6 +1,6 @@
 import Joi from "joi";
 import jwt from "jsonwebtoken";
-import { createBlogDB, deleteBlogDB, getAllBlogsDB, getBlogDB, updateBlogDB } from "../utils/database.js";
+import { createBlogDB, createImageDB, deleteBlogDB, getAllBlogsDB, getBlogDB, updateBlogDB } from "../utils/database.js";
 
 class BlogController {
     constructor(title, subtitle, body, created_at, image, price, author_id, token)
@@ -34,7 +34,7 @@ class BlogController {
         return;
     }
 
-    async createBlog(res)
+    async createBlog(res, req)
     {   
         //current date
         const date = new Date();
@@ -46,6 +46,28 @@ class BlogController {
         const formatted = `${year}-${month}-${day}`;
         this.created_at = formatted;
 
+        // upload image to s3
+
+        const file = req.file;
+        const fileExt = file.originalname.split('.').pop();
+        const fileName = `${uuidv4()}.${fileExt}`;
+
+         // Upload to S3
+        const command = new PutObjectCommand({
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: fileName,
+            Body: file.buffer,
+            ContentType: file.mimetype,
+            ACL: 'public-read', // or remove if using private uploads
+        });
+
+        await s3.send(command);
+
+        const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
+
+
+       const _image = createImageDB(fileName, imageUrl);
+        
         // user id 
 
         this.author_id = jwt.verify(this.token, process.env.ADMIN_TOKEN)._id;
@@ -66,7 +88,7 @@ class BlogController {
 
         // query to db - creating blog
 
-        const blog = await createBlogDB(this.title, this.subtitle, this.body, this.created_at, this.image, this.price, this.author_id);
+        const blog = await createBlogDB(this.title, this.subtitle, this.body, this.created_at, imageUrl, this.price, this.author_id);
         res.send(blog);
     }
 

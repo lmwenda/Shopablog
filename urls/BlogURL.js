@@ -1,11 +1,12 @@
 import { Router } from "express";
 import BlogController from "../controllers/BlogController.js";
 import { createBlogEndpoint, getAllBlogsEndpoint, getBlogEndpoint, updateBlogEndpoint, deleteBlogEndpoint } from "../utils/endpoints.js";
+import { upload } from "../app.js";
 
 const BlogRouter = Router();
 const blog = new BlogController();
 
-BlogRouter.post(createBlogEndpoint, async(req, res) => {
+BlogRouter.post(createBlogEndpoint, upload.single('image'),async(req, res) => {
 
     blog.title = req.body.title;
     blog.subtitle = req.body.subtitle;
@@ -14,7 +15,7 @@ BlogRouter.post(createBlogEndpoint, async(req, res) => {
     blog.price = req.body.price;
     blog.token = req.body.token;
 
-    blog.createBlog(res);
+    blog.createBlog(res, req);
     
 });
 

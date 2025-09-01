@@ -13,6 +13,16 @@ export const pool = mysql2.createPool({
 // const [ data ] = await pool.query("SELECT Blog.author_id, User.user_id, User.email, User.username, Blog.title FROM Blog INNER JOIN User ON Blog.author_id = User.user_id;");
 // console.log(data)
 
+//  Image 
+
+const createImageDB = async (filename, url) => {
+    const [ data ] = pool.query(`INSERT INTO Image(filename, url) Values("${filename}", "${url}");`);
+
+    console.log(data);
+
+    return data;
+}
+
 // USER
 
 const createUserDB = async (email, username, password, res) => {
@@ -133,6 +143,7 @@ const deleteBlogDB = async(id) => {
 }
 
 export { 
+    createImageDB,
     createBlogDB, 
     getBlogDB,
     getAllBlogsDB,

@@ -13,6 +13,7 @@
   "description": "",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
+    "aws-sdk": "^2.1692.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
     "chai": "^5.1.2",
@@ -20,13 +21,15 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.4.7",
+    "dotenv": "^16.6.1",
     "express": "^5.1.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mocha": "^11.0.1",
+    "multer": "^2.0.2",
     "mysql2": "^3.11.5",
     "nodemailer": "^6.10.0",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "uuid": "^11.1.0"
   }
 }

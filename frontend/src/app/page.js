@@ -12,6 +12,7 @@ export default function Page() {
   const { user } = useUser();
     if(user)
     {
+      console.log(user)
         redirect("/home");
     }
 
