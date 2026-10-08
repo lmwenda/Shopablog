@@ -15,13 +15,14 @@ export default function BlogList () {
             .then((data) => {
                 setBlogs(data.payload);
             });
-    }, [setBlogs, blogs])
+
+    }, [BASE_URL, setBlogs]);
 
     return(
         <div className="grid gap-8 md:grid-cols-2">
             {
                 blogs.map((blog) => (
-                    <Link href={`/blog/${blog.blog_id}`}>
+                    <Link key={ blog.blog_id } href={`/blog/${blog.blog_id}`}>
                         <BlogCard
                         key={blog.blog_id}
                         date={blog.created_at}

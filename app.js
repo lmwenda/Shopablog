@@ -7,21 +7,9 @@ import bodyParser from 'body-parser';
 import UserRouter from "./urls/UserURL.js";
 import BlogRouter from "./urls/BlogURL.js";
 import { pool, verifyUserDB } from "./utils/database.js";
-import AWS from "aws-sdk";
-import multer from "multer";
 
 const port = process.env.PORT; 
 const app = express();
-const storage = multer.memoryStorage();
-
-export const upload = multer({ storage: storage });
-export const s3 = new S3Client({
-  region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  },
-});
 
 dotenv.config();
 

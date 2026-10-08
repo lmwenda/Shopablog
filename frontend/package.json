@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "aws-sdk": "^2.1692.0",
     "fs": "^0.0.1-security",
     "motion": "^12.0.5",
     "next": "15.1.5",

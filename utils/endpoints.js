@@ -12,6 +12,7 @@ export const loginAdminUserEndpoint = "/admin/login";
 // Blog Endpoints
 
 export const createBlogEndpoint = "/create";
+export const getBlogImageEndpoint = "/image";
 export const getBlogEndpoint = "/:id";
 export const updateBlogEndpoint = "/update/:id";
 export const deleteBlogEndpoint = "/delete/:id";

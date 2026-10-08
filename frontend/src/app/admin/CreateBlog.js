@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { BASE_URL } from "../exportedDefinitions";
-import uploadFile from "@/utils/uploadFile";
 
 function CreateBlog()
 {
@@ -10,7 +9,7 @@ function CreateBlog()
         title: '',
         subtitle: '',
         body: '',
-        price: '',
+        price: ''
       });
 
       const [image, setImage] = useState(null);
@@ -31,49 +30,46 @@ function CreateBlog()
       const handleSubmit = async (e) => {
         e.preventDefault();
 
-        
-        const data = {
-          title: formData.title,
-          subtitle: formData.subtitle,
-          body: formData.body,
-          price: formData.price,
-          token: token,
-          image: null,
-        }
+        const data = new FormData();
+
+        data.append("title", formData.title);
+        data.append("subtitle", formData.subtitle);
+        data.append("body", formData.body);
+        data.append("price", formData.price);
+        data.append("token", token);
 
         if (image) {
-          data["image"] = image;
-          uploadFile("./image.jpg", image, "shopablog");
+          data.append("image", image);
         }
 
         try {
-          console.log("sends", data.title);
-          console.log(token);
-
-          console.log("s3 bucket:");
-          
-
-          const res = await fetch(BASE_URL+"/blogs/create", {
-            method: 'POST', 
-            headers: {
-                'Content-Type': "application/json"
-            },
-            body: JSON.stringify(data),
+          const res = await fetch(BASE_URL + "/blogs/create", {
+            method: "POST",
+            body: data,
           });
 
+          const responseData = await res.json();
 
-          const _data = await res.json();
-          console.log(_data);
-    
+          console.log(responseData);
+
           if (res.ok) {
-            setMessage('Post created successfully!');
-            setFormData({ title: '', subtitle: '', body: '', price: '' });
+            setMessage("Post created successfully!");
+
+            setFormData({
+              title: "",
+              subtitle: "",
+              body: "",
+              price: "",
+            });
+
             setImage(null);
           } else {
-            setMessage('Error creating post.');
+            setMessage("Error creating post.");
           }
+
         } catch (err) {
-          setMessage('Something went wrong.');
+          console.error(err);
+          setMessage("Something went wrong.");
         }
       };
     

@@ -1,6 +1,7 @@
 import Joi from "joi";
 import jwt from "jsonwebtoken";
-import { createBlogDB, createImageDB, deleteBlogDB, getAllBlogsDB, getBlogDB, updateBlogDB } from "../utils/database.js";
+import { createBlogDB, createImageDB, deleteBlogDB, getAllBlogsDB, getBlogDB, getBlogImageDB, updateBlogDB } from "../utils/database.js";
+import { getImageUrl, uploadImage } from "../utils/s3.js";
 
 class BlogController {
     constructor(title, subtitle, body, created_at, image, price, author_id, token)
@@ -22,8 +23,9 @@ class BlogController {
             subtitle: Joi.string(),
             body: Joi.string().required(),
             created_at: Joi.string().required(),
+            image: Joi.any(),
             price: Joi.number().required(),
-            author_id: Joi.number().required()
+            author_id: Joi.number().required(),
         });
         return schema.validate(body);
     }
@@ -47,26 +49,23 @@ class BlogController {
         this.created_at = formatted;
 
         // upload image to s3
+        
+        if (!this.image) {
+            return res.status(400).json({
+                message: "Image is required"
+            });
+        }
 
-        const file = req.file;
-        const fileExt = file.originalname.split('.').pop();
-        const fileName = `${uuidv4()}.${fileExt}`;
+        const imageKey = `blogs/${Date.now()}-${this.image.originalname}`;
 
-         // Upload to S3
-        const command = new PutObjectCommand({
-            Bucket: process.env.AWS_BUCKET_NAME,
-            Key: fileName,
-            Body: file.buffer,
-            ContentType: file.mimetype,
-            ACL: 'public-read', // or remove if using private uploads
-        });
+        const uploadedImageKey = await uploadImage(
+            this.image,
+            imageKey,
+        );
 
-        await s3.send(command);
-
-        const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
-
-
-       const _image = createImageDB(fileName, imageUrl);
+        const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${imageKey}`;
+        const _image = await createImageDB(this.image.originalname, imageUrl);
+        console.log(_image);
         
         // user id 
 
@@ -78,7 +77,7 @@ class BlogController {
             subtitle: this.subtitle,
             body: this.body,
             created_at: this.created_at,
-            /*image: this.image, */
+            image: _image.insertId,
             price: this.price,
             author_id: this.author_id
         }
@@ -88,7 +87,7 @@ class BlogController {
 
         // query to db - creating blog
 
-        const blog = await createBlogDB(this.title, this.subtitle, this.body, this.created_at, imageUrl, this.price, this.author_id);
+        const blog = await createBlogDB(this.title, this.subtitle, this.body, this.created_at, post.image, this.price, this.author_id);
         res.send(blog);
     }
 
@@ -103,6 +102,40 @@ class BlogController {
     {
         const data = await getBlogDB(id);
         res.send(data);
+    }
+
+    async getBlogImage(res, image_id) {
+        try {
+
+            const data = await getBlogImageDB(image_id);
+
+            console.log(data[0]);
+
+            if (!data[0] || !data[0].url) {
+                return res.status(404).json({
+                    message: "Image not found"
+                });
+            }
+
+            const imageKey = new URL(data[0].url).pathname.substring(1);
+
+            console.log("S3 Key:", imageKey);
+
+            const url = await getImageUrl(imageKey);
+
+            return res.status(200).json({
+                url: url
+            });
+
+        } catch (error) {
+
+            console.error(error);
+
+            return res.status(500).json({
+                message: "Could not retrieve image"
+            });
+
+        }
     }
 
     async updateBlog(res, id)

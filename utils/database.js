@@ -16,7 +16,7 @@ export const pool = mysql2.createPool({
 //  Image 
 
 const createImageDB = async (filename, url) => {
-    const [ data ] = pool.query(`INSERT INTO Image(filename, url) Values("${filename}", "${url}");`);
+    const [ data ] = await pool.query(`INSERT INTO Image(filename, url, uploaded_At) Values("${filename}", "${url}", NOW());`);
 
     console.log(data);
 
@@ -124,6 +124,14 @@ const getBlogDB = async(id) => {
     return data;
 }
 
+const getBlogImageDB = async(image_id) => {
+    console.log("Getting Image URL");
+
+    const [ data ] = await pool.query(`SELECT * from Image where image_id=?`, [image_id]);
+
+    return data;
+}
+
 const updateBlogDB = async(id, title, subtitle, body) => {
     console.log(`Updating Blog (#${id})`);
     
@@ -152,6 +160,7 @@ export {
     createUserDB, 
     getUserDB, 
     getAllUsersDB, 
+    getBlogImageDB,
     deleteUserDB, 
     updateUserDB,
     verifyUserDB 
